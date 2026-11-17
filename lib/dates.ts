@@ -20,3 +20,30 @@ export function startOfTodayNY(now: Date = new Date()): Date {
     ? ifDaylightTime
     : new Date(`${ymd}T05:00:00Z`)
 }
+
+// --- Display formatting (always in New York time) ---
+
+const dateFormat = new Intl.DateTimeFormat('en-US', {
+  timeZone: TIME_ZONE,
+  weekday: 'short',
+  month: 'short',
+  day: 'numeric',
+})
+
+const timeFormat = new Intl.DateTimeFormat('en-US', {
+  timeZone: TIME_ZONE,
+  hour: 'numeric',
+  minute: '2-digit',
+})
+
+export function formatEventDate(iso: string): string {
+  return dateFormat.format(new Date(iso)) // "Thu, Oct 29"
+}
+
+export function formatEventTime(iso: string): string {
+  return timeFormat.format(new Date(iso)) // "11:00 AM"
+}
+
+export function formatEventDateTime(iso: string, isAllDay: boolean): string {
+  return `${formatEventDate(iso)} · ${isAllDay ? 'All day' : formatEventTime(iso)}`
+}
