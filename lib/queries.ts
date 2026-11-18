@@ -97,3 +97,18 @@ export async function getCategoryWithEvents(
   if (error) throw new Error(`getCategoryWithEvents (events) failed: ${error.message}`)
   return { category: category as Category, events: (data ?? []) as unknown as PublicEvent[] }
 }
+
+  export async function getCategoryBySlug(slug: string): Promise<Category | null> {
+  'use cache'
+  cacheLife('minutes')
+  cacheTag('categories')
+
+  const { data, error } = await supabase
+    .from('categories')
+    .select('id, name, slug, description')
+    .eq('slug', slug)
+    .maybeSingle()
+
+  if (error) throw new Error(`getCategoryBySlug failed: ${error.message}`)
+  return (data as Category | null) ?? null
+}
