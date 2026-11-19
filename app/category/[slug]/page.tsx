@@ -6,6 +6,11 @@ import { getCategories, getCategoryBySlug, getCategoryWithEvents } from '@/lib/q
 
 type Props = { params: Promise<{ slug: string }> }
 
+// Intentional: this page reads the URL (params) and must return a real
+// HTTP 404 for unknown or hidden events, so it is allowed to block
+// instead of streaming. Revisit in the polish phase.
+export const instant = false
+
 // Tells Next.js which category pages to build ahead of time.
 export async function generateStaticParams() {
   const categories = await getCategories()

@@ -47,3 +47,55 @@ export function formatEventTime(iso: string): string {
 export function formatEventDateTime(iso: string, isAllDay: boolean): string {
   return `${formatEventDate(iso)} · ${isAllDay ? 'All day' : formatEventTime(iso)}`
 }
+
+// --- Detail page formatting ---
+
+const longDateFormat = new Intl.DateTimeFormat('en-US', {
+  timeZone: TIME_ZONE,
+  weekday: 'long',
+  month: 'long',
+  day: 'numeric',
+  year: 'numeric',
+})
+
+export function formatLongDate(iso: string): string {
+  return longDateFormat.format(new Date(iso)) // "Thursday, November 19, 2026"
+}
+
+// "2026-11-19": the calendar day in New York, used to compare days.
+function nyDateKey(iso: string): string {
+  return new Date(iso).toLocaleDateString('en-CA', { timeZone: TIME_ZONE })
+}
+
+// Turns start/end into the two lines shown in the "When and where" panel.
+export function describeWhen(
+  startIso: string,
+  endIso: string | null,
+  isAllDay: boolean
+): { dateLine: string; timeLine: string } {
+  const spansDays = endIso !== null && nyDateKey(endIso) !== nyDateKey(startIso)
+
+  if (isAllDay) {
+    return {
+      dateLine:
+        spansDays && endIso
+          ? `${formatLongDate(startIso)} – ${formatLongDate(endIso)}`
+          : formatLongDate(startIso),
+      timeLine: 'All day',
+    }
+  }
+
+  if (spansDays && endIso) {
+    return {
+      dateLine: `${formatLongDate(startIso)}, ${formatEventTime(startIso)}`,
+      timeLine: `through ${formatLongDate(endIso)}, ${formatEventTime(endIso)}`,
+    }
+  }
+
+  return {
+    dateLine: formatLongDate(startIso),
+    timeLine: endIso
+      ? `${formatEventTime(startIso)} – ${formatEventTime(endIso)}`
+      : formatEventTime(startIso),
+  }
+}
