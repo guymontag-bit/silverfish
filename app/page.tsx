@@ -5,7 +5,7 @@ export default async function Home() {
   const events = await getUpcomingEvents()
 
   return (
-    <main className="mx-auto max-w-3xl px-4 py-8">
+    <main id="main" className="mx-auto max-w-3xl px-4 py-8">
       <header className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight">Capital Region Events</h1>
         <p className="mt-2 opacity-70">

@@ -53,13 +53,13 @@ export default async function EventPage({ params }: Props) {
     event.price_type === 'free' ? 'Free' : event.price_type === 'paid' ? 'Paid' : 'Not listed'
 
   return (
-    <main className="mx-auto max-w-3xl px-4 py-8">
+    <main id="main" className="mx-auto max-w-3xl px-4 py-8">
       <nav aria-label="Breadcrumb" className="mb-4 text-sm">
-        <Link href="/" className="text-blue-700 hover:underline">
+        <Link href="/" className="text-blue-700 dark:text-blue-400 hover:underline">
           All events
         </Link>
         <span aria-hidden="true"> / </span>
-        <Link href={`/category/${category.slug}`} className="text-blue-700 hover:underline">
+        <Link href={`/category/${category.slug}`} className="text-blue-700 dark:text-blue-400 hover:underline">
           {category.name}
         </Link>
       </nav>
@@ -99,7 +99,7 @@ export default async function EventPage({ params }: Props) {
                 </dd>
                 {venue.phone && (
                   <dd className="mt-1">
-                    <a href={telHref(venue.phone)} className="text-blue-700 hover:underline">
+                    <a href={telHref(venue.phone)} className="text-blue-700 dark:text-blue-400 hover:underline">
                       {venue.phone}
                     </a>
                   </dd>
@@ -109,7 +109,7 @@ export default async function EventPage({ params }: Props) {
                     href={directionsUrl(venue)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-blue-700 hover:underline"
+                    className="text-blue-700 dark:text-blue-400 hover:underline"
                   >
                     Driving directions
                   </a>
@@ -153,7 +153,7 @@ export default async function EventPage({ params }: Props) {
                   href={organizer.website_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-medium text-blue-700 hover:underline"
+                  className="font-medium text-blue-700 dark:text-blue-400 dark:text-blue-400 hover:underline"
                 >
                   {organizer.name}
                 </a>

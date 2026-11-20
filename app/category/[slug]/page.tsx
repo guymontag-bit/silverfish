@@ -41,9 +41,9 @@ export default async function CategoryPage({ params }: Props) {
   const { category, events } = result
 
   return (
-    <main className="mx-auto max-w-3xl px-4 py-8">
+    <main id="main"className="mx-auto max-w-3xl px-4 py-8">
       <p className="mb-4 text-sm">
-        <Link href="/" className="text-blue-700 hover:underline">
+        <Link href="/" className="text-blue-700 dark:text-blue-400 hover:underline">
           All events
         </Link>
       </p>
